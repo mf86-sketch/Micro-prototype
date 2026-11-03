@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f9fc">
+  <title>Welcome to BlueSky</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172330;
+      --muted: #6a7886;
+      --blue: #1687f8;
+      --blue-dark: #0965c2;
+      --line: #e4eaf0;
+      --coral: #ff765f;
+      --mint: #58c8a4;
+      font-family: "DM Sans", sans-serif;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; min-height: 100vh; color: var(--ink); background: #f6f9fc; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    .page { min-height: 100vh; display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(390px, .92fr); }
+    .visual { position: relative; min-height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: 38px 5.4vw 34px; color: white; isolation: isolate; }
+    .visual::before { content: ""; position: absolute; z-index: -2; inset: 0; background: url("https://images.unsplash.com/photo-1499346030926-9a72daac6c63?auto=format&fit=crop&w=1800&q=85") center / cover; transform: scale(1.02); }
+    .visual::after { content: ""; position: absolute; z-index: -1; inset: 0; background: linear-gradient(155deg, rgba(6, 73, 139, .14) 0%, rgba(12, 72, 131, .13) 37%, rgba(10, 52, 94, .72) 100%); }
+    .brand { display: inline-flex; gap: 11px; align-items: center; width: fit-content; color: inherit; text-decoration: none; font: 800 21px "Manrope", sans-serif; letter-spacing: -.5px; }
+    .brand-mark { width: 33px; height: 33px; display: grid; place-items: center; border-radius: 50%; background: white; color: var(--blue); font-size: 19px; }
+    .visual-copy { max-width: 570px; padding-bottom: 5vh; animation: rise-in .7s both; }
+    .eyebrow { margin: 0 0 16px; font-size: 12px; font-weight: 700; letter-spacing: 1.7px; text-transform: uppercase; }
+    .visual-copy h1 { max-width: 540px; margin: 0; font: 700 clamp(42px, 5.5vw, 76px)/1.02 "Manrope", sans-serif; letter-spacing: -2.5px; }
+    .visual-copy p { max-width: 440px; margin: 20px 0 0; color: rgba(255,255,255,.91); font-size: 17px; line-height: 1.6; }
+    .visual-footer { font-size: 12px; color: rgba(255,255,255,.82); }
+    .login-side { display: flex; justify-content: center; align-items: center; padding: 64px clamp(36px, 7vw, 112px); background: #fbfcfe; }
+    .login-content { width: 100%; max-width: 390px; animation: rise-in .65s .08s both; }
+    .login-content .brand { color: var(--ink); display: none; }
+    .login-content h2 { margin: 0 0 8px; font: 700 34px/1.2 "Manrope", sans-serif; letter-spacing: -.9px; }
+    .intro { margin: 0 0 34px; color: var(--muted); font-size: 15px; line-height: 1.55; }
+    .field { margin-bottom: 18px; }
+    label { display: block; margin: 0 0 8px; font-size: 13px; font-weight: 700; }
+    input { width: 100%; height: 51px; padding: 0 15px; color: var(--ink); background: white; border: 1px solid #d8e0e8; border-radius: 8px; outline: none; transition: border-color .16s, box-shadow .16s; }
+    input::placeholder { color: #a0aab4; }
+    input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(22,135,248,.14); }
+    .forgot-row { display: flex; justify-content: flex-end; margin-top: -7px; margin-bottom: 24px; }
+    a { color: var(--blue-dark); font-size: 13px; font-weight: 600; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .login-button { display: flex; width: 100%; height: 52px; justify-content: center; align-items: center; border: 0; border-radius: 8px; color: white; background: var(--blue); font-size: 15px; font-weight: 700; box-shadow: 0 5px 12px rgba(22,135,248,.2); transition: transform .16s, background .16s, box-shadow .16s; }
+    .login-button:hover { transform: translateY(-1px); background: #0876e2; box-shadow: 0 8px 18px rgba(22,135,248,.24); }
+    .login-button:active { transform: translateY(0); }
+    .separator { display: flex; align-items: center; gap: 13px; margin: 25px 0; color: #9aa5ae; font-size: 12px; }
+    .separator::before, .separator::after { content: ""; height: 1px; flex: 1; background: var(--line); }
+    .signup { margin: 0; color: var(--muted); text-align: center; font-size: 14px; }
+    .signup a { margin-left: 4px; font-size: 14px; }
+    .legal { margin: 45px 0 0; color: #8a96a2; text-align: center; font-size: 11px; line-height: 1.7; }
+    .legal a { color: #687786; font-size: inherit; font-weight: 500; }
+
+    .success-screen { position: fixed; z-index: 5; inset: 0; display: grid; place-items: center; overflow: hidden; padding: 28px; background: radial-gradient(ellipse at 50% 42%, #fff 0%, #f2faff 48%, #e8f4ff 100%); opacity: 0; visibility: hidden; transition: opacity .35s ease, visibility .35s; }
+    .success-screen.is-visible { opacity: 1; visibility: visible; }
+    .success-content { position: relative; z-index: 2; text-align: center; animation: pop-in .55s cubic-bezier(.2,.8,.2,1) both; }
+    .success-icon { width: 84px; height: 84px; display: grid; place-items: center; margin: 0 auto 23px; border-radius: 27px; color: white; background: linear-gradient(145deg, #39a7ff, #0879e5); box-shadow: 0 15px 32px rgba(15,126,230,.24); transform: rotate(-7deg); font-size: 39px; }
+    .success-content h1 { margin: 0; font: 800 clamp(44px, 8vw, 72px)/1 "Manrope", sans-serif; letter-spacing: -2px; }
+    .success-content p { margin: 15px 0 29px; color: var(--muted); font-size: 17px; }
+    .back-button { padding: 12px 19px; border: 1px solid #d7e3ed; border-radius: 8px; color: #304558; background: rgba(255,255,255,.78); font-size: 14px; font-weight: 700; }
+    .back-button:hover { background: white; border-color: #aacded; }
+    #confetti { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .success-screen[aria-hidden="true"] { pointer-events: none; }
+
+    @keyframes rise-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pop-in { from { opacity: 0; transform: translateY(16px) scale(.94); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @media (max-width: 860px) {
+      .page { grid-template-columns: 1fr; }
+      .visual { min-height: 310px; padding: 24px 7vw; }
+      .visual-copy { padding: 40px 0 12px; }
+      .visual-copy h1 { max-width: 520px; font-size: clamp(38px, 8vw, 57px); letter-spacing: -1.7px; }
+      .visual-copy p { margin-top: 12px; font-size: 15px; }
+      .eyebrow { margin-bottom: 11px; }
+      .visual-footer { display: none; }
+      .login-side { align-items: flex-start; padding: 42px 7vw 34px; }
+      .login-content { max-width: 480px; }
+      .login-content .brand { display: inline-flex; margin-bottom: 32px; }
+      .legal { margin-top: 35px; }
+    }
+    @media (max-width: 480px) {
+      .visual { min-height: 270px; }
+      .visual-copy { padding-top: 30px; }
+      .login-side { padding-top: 32px; }
+      .login-content h2 { font-size: 30px; }
+      .intro { margin-bottom: 27px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page" id="loginPage">
+    <section class="visual" aria-label="Welcome">
+      <a class="brand" href="#" aria-label="BlueSky home"><span class="brand-mark" aria-hidden="true">✳</span> BlueSky</a>
+      <div class="visual-copy">
+        <p class="eyebrow">A little more sky</p>
+        <h1>Your people.<br>Your corner<br>of the internet.</h1>
+        <p>Find your community and follow the conversations that make your day.</p>
+      </div>
+      <div class="visual-footer">A social space that feels like yours.</div>
+    </section>
+
+    <section class="login-side" aria-labelledby="loginTitle">
+      <div class="login-content">
+        <a class="brand" href="#" aria-label="BlueSky home"><span class="brand-mark" aria-hidden="true">✳</span> BlueSky</a>
+        <h2 id="loginTitle">Welcome back</h2>
+        <p class="intro">Log in to catch up with your world.</p>
+        <form id="loginForm">
+          <div class="field">
+            <label for="handle">Email or username</label>
+            <input id="handle" name="handle" type="text" autocomplete="username" placeholder="you@example.com">
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password">
+          </div>
+          <div class="forgot-row"><a href="#" id="forgotLink">Forgot password?</a></div>
+          <button class="login-button" type="submit">Log in</button>
+        </form>
+        <div class="separator">NEW TO BLUESKY?</div>
+        <p class="signup">Make yourself at home. <a href="#" id="signupLink">Create an account</a></p>
+        <p class="legal">By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <section class="success-screen" id="successScreen" aria-hidden="true" aria-labelledby="successTitle">
+    <canvas id="confetti" aria-hidden="true"></canvas>
+    <div class="success-content">
+      <div class="success-icon" aria-hidden="true">✓</div>
+      <h1 id="successTitle">You are in.</h1>
+      <p>Your corner of the internet is waiting.</p>
+      <button class="back-button" id="backButton" type="button">Back to sign in</button>
+    </div>
+  </section>
+
+  <script>
+    const loginForm = document.querySelector("#loginForm");
+    const loginPage = document.querySelector("#loginPage");
+    const successScreen = document.querySelector("#successScreen");
+    const canvas = document.querySelector("#confetti");
+    const context = canvas.getContext("2d");
+    const colors = ["#1687f8", "#ff765f", "#58c8a4", "#ffc857", "#8c7cf0", "#f27eae"];
+    let confettiPieces = [];
+    let animationFrame;
+
+    function launchConfetti() {
+      const pixelRatio = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * pixelRatio;
+      canvas.height = window.innerHeight * pixelRatio;
+      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      confettiPieces = Array.from({ length: 150 }, () => ({
+        x: Math.random() * window.innerWidth,
+        y: -Math.random() * window.innerHeight * .8,
+        width: 5 + Math.random() * 7,
+        height: 7 + Math.random() * 8,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        speed: 2.2 + Math.random() * 4.2,
+        drift: (Math.random() - .5) * 2.4,
+        rotation: Math.random() * Math.PI,
+        spin: (Math.random() - .5) * .14
+      }));
+      cancelAnimationFrame(animationFrame);
+      const draw = () => {
+        context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        confettiPieces.forEach((piece) => {
+          piece.y += piece.speed;
+          piece.x += piece.drift;
+          piece.rotation += piece.spin;
+          context.save();
+          context.translate(piece.x, piece.y);
+          context.rotate(piece.rotation);
+          context.fillStyle = piece.color;
+          context.fillRect(-piece.width / 2, -piece.height / 2, piece.width, piece.height);
+          context.restore();
+        });
+        confettiPieces = confettiPieces.filter((piece) => piece.y < window.innerHeight + 20);
+        if (confettiPieces.length) animationFrame = requestAnimationFrame(draw);
+      };
+      animationFrame = requestAnimationFrame(draw);
+    }
+
+    loginForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      loginPage.inert = true;
+      successScreen.setAttribute("aria-hidden", "false");
+      successScreen.classList.add("is-visible");
+      launchConfetti();
+    });
+
+    document.querySelector("#backButton").addEventListener("click", () => {
+      successScreen.classList.remove("is-visible");
+      successScreen.setAttribute("aria-hidden", "true");
+      loginPage.inert = false;
+      cancelAnimationFrame(animationFrame);
+      context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      document.querySelector("#handle").focus();
+    });
+
+    document.querySelectorAll("#forgotLink, #signupLink, .brand, .legal a").forEach((link) => {
+      link.addEventListener("click", (event) => event.preventDefault());
+    });
+  </script>
+</body>
+</html>
